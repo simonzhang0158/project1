@@ -38,8 +38,8 @@ app = Flask(__name__, template_folder=tmpl_dir)
 #     DATABASEURI = "postgresql://ewu2493:foobar@<IP_OF_POSTGRE_SQL_SERVER>/postgres"
 #
 # Swap out the URI below with the URI for the database created in part 2
-DATABASEURI = "sqlite:///test.db"
-
+#DATABASEURI = "sqlite:///test.db"
+DATABASEURI = "postgresql://sz2624:46zyq@104.196.51.146/postgres"
 
 #
 # This line creates a database engine that knows how to connect to the URI above
@@ -62,12 +62,12 @@ engine = create_engine(DATABASEURI)
 # 
 # The setup code should be deleted once you switch to using the Part 2 postgresql database
 #
-engine.execute("""DROP TABLE IF EXISTS test;""")
-engine.execute("""CREATE TABLE IF NOT EXISTS test (
-  id serial,
-  name text
-);""")
-engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
+#engine.execute("""DROP TABLE IF EXISTS test;""")
+#engine.execute("""CREATE TABLE IF NOT EXISTS test (
+#  id serial,
+#  name text
+#);""")
+#engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
 #
 # END SQLITE SETUP CODE
 #
@@ -134,10 +134,10 @@ def index():
   #
   # example of a database query
   #
-  cursor = g.conn.execute("SELECT name FROM test")
-  names = []
+  cursor = g.conn.execute("SELECT email FROM USERS")
+  email = []
   for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
+    names.append(result['email'])  # can also be accessed using result[0]
   cursor.close()
 
   #
@@ -166,7 +166,7 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+  context = dict(data = email)
 
 
   #
@@ -191,10 +191,10 @@ def another():
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
 def add():
-  name = request.form['name']
-  print name
-  cmd = 'INSERT INTO test(name) VALUES (:name1), (:name2)';
-  g.conn.execute(text(cmd), name1 = name, name2 = name);
+  email = request.form['email']
+  print email
+  cmd = 'INSERT INTO USERS(email) VALUES (:email1)';
+  g.conn.execute(text(cmd), email1 = email);
   return redirect('/')
 
 
@@ -204,7 +204,7 @@ def login():
     this_is_never_executed()
 
 
-if __name__ == "__main__":
+if __email__ == "__main__":
   import click
 
   @click.command()
