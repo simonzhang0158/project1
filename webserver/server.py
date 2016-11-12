@@ -192,7 +192,7 @@ def newfile():
   return render_template("newfile.html")
 
 @app.route('/index')
-def newfile():
+def index2():
   return render_template("index.html")
 
 
