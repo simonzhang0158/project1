@@ -212,7 +212,7 @@ def login():
     this_is_never_executed()
 
 
-if __email__ == "__main__":
+if __name__ == "__main__":
   import click
 
   @click.command()
