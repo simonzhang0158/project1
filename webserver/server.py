@@ -198,11 +198,11 @@ def index2():
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
-def add(data):
-  email = request.form['data']
+def add():
+  email = request.form['email']
   print email
-  cmd = 'INSERT INTO USERS(data) VALUES (:data1)';
-  g.conn.execute(text(cmd), data1 = data);
+  cmd = 'INSERT INTO USERS(email) VALUES (:email1)';
+  g.conn.execute(text(cmd), email1 = email);
   return redirect('/')
 
 
