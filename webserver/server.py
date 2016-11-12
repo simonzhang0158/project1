@@ -135,7 +135,7 @@ def index():
   # example of a database query
   #
   cursor = g.conn.execute("SELECT email FROM USERS")
-  email = []
+  emails = []
   for result in cursor:
     names.append(result['email'])  # can also be accessed using result[0]
   cursor.close()
@@ -166,7 +166,7 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = email)
+  context = dict(data = emails)
 
 
   #
