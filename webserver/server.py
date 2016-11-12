@@ -135,7 +135,7 @@ def index():
   # example of a database query
   #
   cursor = g.conn.execute("SELECT email FROM USERS")
-  names  = []
+  emails  = []
   for result in cursor:
     names.append(result['email'])  # can also be accessed using result[0]
   cursor.close()
@@ -166,7 +166,7 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+  context = dict(data = emails)
 
 
   #
@@ -212,7 +212,7 @@ def login():
     this_is_never_executed()
 
 
-if __name__ == "__main__":
+if __email__ == "__main__":
   import click
 
   @click.command()
