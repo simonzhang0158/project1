@@ -134,10 +134,10 @@ def index():
   #
   # example of a database query
   #
-  cursor = g.conn.execute("SELECT email FROM USERS")
-  emails  = []
+  cursor = g.conn.execute("SELECT uid FROM USERS")
+  names  = []
   for result in cursor:
-    emails.append(result['email'])  # can also be accessed using result[0]
+    names.append(result['uid'])  # can also be accessed using result[0]
   cursor.close()
 
   #
@@ -166,7 +166,7 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = emails)
+  context = dict(data = names)
 
 
   #
@@ -191,18 +191,15 @@ def another():
 def newfile():
   return render_template("newfile.html")
 
-@app.route('/index')
-def index2():
-  return render_template("index.html")
 
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
 def add():
-  email = request.form['email']
+  name = request.form['uid']
   print email
-  cmd = 'INSERT INTO USERS(email) VALUES (:email1)';
-  g.conn.execute(text(cmd), email1 = email);
+  cmd = 'INSERT INTO USERS(uid) VALUES (:uid)';
+  g.conn.execute(text(cmd), uid = uid);
   return redirect('/')
 
 
