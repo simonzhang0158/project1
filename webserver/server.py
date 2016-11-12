@@ -21,7 +21,7 @@ from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
-app = Flask(__email__, template_folder=tmpl_dir)
+app = Flask(__name__, template_folder=tmpl_dir)
 
 
 #
@@ -137,7 +137,7 @@ def index():
   cursor = g.conn.execute("SELECT email FROM USERS")
   emails  = []
   for result in cursor:
-    names.append(result['email'])  # can also be accessed using result[0]
+    emails.append(result['email'])  # can also be accessed using result[0]
   cursor.close()
 
   #
