@@ -188,21 +188,21 @@ def another():
   return render_template("anotherfile.html")
 
 @app.route('/newfile')
-def another():
+def newfile():
   return render_template("newfile.html")
 
 @app.route('/index')
-def another():
+def newfile():
   return render_template("index.html")
 
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
-def add():
-  email = request.form['email']
+def add(data):
+  email = request.form['data']
   print email
-  cmd = 'INSERT INTO USERS(email) VALUES (:email1)';
-  g.conn.execute(text(cmd), email1 = email);
+  cmd = 'INSERT INTO USERS(data) VALUES (:data1)';
+  g.conn.execute(text(cmd), data1 = data);
   return redirect('/')
 
 
