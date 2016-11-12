@@ -187,6 +187,14 @@ def index():
 def another():
   return render_template("anotherfile.html")
 
+@app.route('/newfile')
+def another():
+  return render_template("newfile.html")
+
+@app.route('/index')
+def another():
+  return render_template("index.html")
+
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
