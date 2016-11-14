@@ -1,0 +1,31 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+
+<body>
+  <h1>user's address</h1>
+  <div>{{data}}</div>
+
+<form method="POST" action="/add">
+<p>New user's address: <input type="text" name="address">
+    zipcode: <input type="int" name="zipcode">
+    state: <input type="text" name="state"> 
+    email: <input type="text" name="email">
+    password: <input type="text" name="password"> 
+    card number(16 digits): <input type="int" name="card_number"> 
+    card type(VISA, MASTER_CARD, DISCOVER): <input type="text" name="card_type"> 
+    name on card: <input type="text" name="name_on_card"> 
+    <input type="submit" value="Add">
+    </p>
+</form>
+    
+    <p><a href="/">Go back to log in page</a></p>     
+</body>
+
+
+</html>

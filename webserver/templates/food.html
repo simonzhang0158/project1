@@ -1,0 +1,31 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+
+<body>
+  <h1>Foods</h1>
+   
+  <div>
+    {% for n in fnames %}
+    <div>{{n}}</div>
+    {% endfor %}
+  </div>
+<form method="POST" action="/add3">
+<p>choose your food: <input type="text" name="food">
+    quantity:<input type="int" name="quantity">
+    <input type="submit" value="Add">
+    </p>
+</form>    
+<p><a href="/rate">Rate this restaurant</a></p>  
+<p><a href="/reserve">Reserve this restaurant</a></p>  
+<p><a href="/">log out</a></p>     
+</body>
+
+
+</html>
+

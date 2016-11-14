@@ -1,0 +1,25 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+
+<body>
+  <h1>Your Order</h1>
+    <div>user's email:{{order['email']}}</div>
+    <div>user's address:{{order['address']}}</div>
+    <div>restaurant:{{order['restaurant']}}</div>
+    <div>delivery company:{{order['dname']}}</div>
+    <div>food:{{order['food']}}</div>
+    <div>total price:{{order['total_price']}}</div>
+
+<p><a href="/restaurant">make another order</a></p>      
+<p><a href="/">log out</a></p>     
+    
+</body>
+
+
+</html>
