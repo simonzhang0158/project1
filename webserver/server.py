@@ -279,13 +279,6 @@ def add():
         aids.append(result['aid'])
     aid.close()
     aaid=int(aids[0])
-    global order
-    if 'uid' in order:
-        del order['uid']
-    order['uid']=aaid+210000
-    if 'email' in order:
-        del order['email']
-    order['email']=email
     cmd3 = 'INSERT INTO users (uid, email, aid, password) VALUES (:uid1, :email1, :aid1, :password1)';
     g.conn.execute(text(cmd3), uid1 = aaid+210000, email1=email, aid1 = aaid, password1=password);  
     cmd4 = 'INSERT INTO cards (uid, card_number, card_type, name_on_card) VALUES (:uid1, :card_number1, :card_type1, :name_on_card1)';
@@ -298,7 +291,7 @@ def add():
         rest = result[0]+' Type: '+result[1]+' '+'$'*result[2]
         rnames.append(rest)
     cursor.close()
-    context = dict(restaurant = rnames)   
+    context = dict(restaurant = rnames)        
     return render_template("restaurant.html", **context)
 
 @app.route('/add2', methods=['POST'])
@@ -422,8 +415,6 @@ def doreserve():
     g.conn.execute(text(cmd), uid1 = order['uid'], rid1=order['rid'], number1=number, date1=date, time1=time); 
     cursor = g.conn.execute("SELECT name, type, dollar_range FROM restaurants")
     rnames = []
-    rtypes = []
-    rdollar_ranges = []
     for result in cursor:
         rest = result[0]+' Type: '+result[1]+' '+'$'*result[2]
         rnames.append(rest)
@@ -441,6 +432,18 @@ def order_history():
     orders.close()
     context = dict(orders = oorder) 
     return render_template("order_history.html", **context)
+
+@app.route('/seerate')
+def seerate():
+    cmd = 'select stars, comments from rate where rid = :rid1';
+    rates = g.conn.execute(text(cmd), rid1 = order['rid']);
+    rrates=[]
+    for result in rates:
+        rate = 'Stars: '+'*'*result[0]+' Comments: '+result[1]
+        rrates.append(rate)
+    rates.close()
+    context = dict(rate = rrates) 
+    return render_template("seerate.html", **context)
 
 #@app.route('/login')
 #def login():
