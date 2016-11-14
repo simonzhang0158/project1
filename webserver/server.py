@@ -283,7 +283,7 @@ def add():
     g.conn.execute(text(cmd3), uid1 = aaid+210000, email1=email, aid1 = aaid, password1=password);  
     cmd4 = 'INSERT INTO cards (uid, card_number, card_type, name_on_card) VALUES (:uid1, :card_number1, :card_type1, :name_on_card1)';
     g.conn.execute(text(cmd4), uid1 = aaid+210000, card_number1=card_number, card_type1 = card_type, name_on_card1=name_on_card); 
-    return render_template("restaurant.html", **context)
+    return render_template("restaurant.html")
 
 @app.route('/add2', methods=['POST'])
 def add2():
