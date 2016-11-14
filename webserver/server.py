@@ -279,6 +279,13 @@ def add():
         aids.append(result['aid'])
     aid.close()
     aaid=int(aids[0])
+    global order
+    if 'uid' in order:
+        del order['uid']
+    order['uid']=aaid+210000
+    if 'email' in order:
+        del order['email']
+    order['email']=email
     cmd3 = 'INSERT INTO users (uid, email, aid, password) VALUES (:uid1, :email1, :aid1, :password1)';
     g.conn.execute(text(cmd3), uid1 = aaid+210000, email1=email, aid1 = aaid, password1=password);  
     cmd4 = 'INSERT INTO cards (uid, card_number, card_type, name_on_card) VALUES (:uid1, :card_number1, :card_type1, :name_on_card1)';
