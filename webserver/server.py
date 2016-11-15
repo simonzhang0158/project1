@@ -16,6 +16,7 @@ Read about it online.
 """
 
 import os
+from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
@@ -211,7 +212,6 @@ def login():
             if 'email' in order:
                 del order['email']
             order['email']=email
-            
             cursor = g.conn.execute("SELECT name, type, dollar_range FROM restaurants")
             rnames = []
             for result in cursor:
@@ -278,11 +278,23 @@ def add():
     for result in aid:
         aids.append(result['aid'])
     aid.close()
-    aaid=int(aids[0])
-    cmd3 = 'INSERT INTO users (uid, email, aid, password) VALUES (:uid1, :email1, :aid1, :password1)';
-    g.conn.execute(text(cmd3), uid1 = aaid+210000, email1=email, aid1 = aaid, password1=password);  
-    cmd4 = 'INSERT INTO cards (uid, card_number, card_type, name_on_card) VALUES (:uid1, :card_number1, :card_type1, :name_on_card1)';
-    g.conn.execute(text(cmd4), uid1 = aaid+210000, card_number1=card_number, card_type1 = card_type, name_on_card1=name_on_card); 
+    aaid=int(max(aids))
+    try:
+        cmd3 = 'INSERT INTO users (uid, email, aid, password) VALUES (:uid1, :email1, :aid1, :password1)';
+        g.conn.execute(text(cmd3), uid1 = aaid+210000, email1=email, aid1 = aaid, password1=password);
+    except (IntegrityError, DataError):
+        deletecmd = 'delete from address where aid = :aid2';
+        g.conn.execute(text(deletecmd),aid2=aaid);
+        return render_template("wrong.html")
+    try:
+        cmd4 = 'INSERT INTO cards (uid, card_number, card_type, name_on_card) VALUES (:uid1, :card_number1, :card_type1, :name_on_card1)';
+        g.conn.execute(text(cmd4), uid1 = aaid+210000, card_number1=card_number, card_type1 = card_type, name_on_card1=name_on_card); 
+    except (IntegrityError, DataError):
+        deletecmd2 = 'delete from address where aid = :aid2';
+        g.conn.execute(text(deletecmd),aid2=aaid);
+        deletecmd2 = 'delete from users where uid = :uid2';
+        g.conn.execute(text(deletecmd2),uid2=aaid+210000);
+        return render_template("wrong.html")
     cursor = g.conn.execute("SELECT name, type, dollar_range FROM restaurants")
     rnames = []
     rtypes = []
