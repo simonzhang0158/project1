@@ -424,11 +424,12 @@ def doreserve():
 
 @app.route('/order_history')
 def order_history():
-    cmd = 'select * from orders where uid=:uid1';
+    cmd = 'select restaurants.name, food.name,orders.order_date from (orders join food on food.fid=orders.fid) join restaurants on restaurants.rid=orders.rid where orders.uid=:uid1';
     orders = g.conn.execute(text(cmd), uid1 = order['uid']);
     oorder=[]
     for result in orders:
-        oorder.append(result)
+        tmp = 'Restaurant: '+result[0]+' food '+result[1]+' order date: '+str(result[2])
+        oorder.append(tmp)
     orders.close()
     context = dict(orders = oorder) 
     return render_template("order_history.html", **context)
