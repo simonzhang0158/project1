@@ -428,7 +428,7 @@ def order_history():
     orders = g.conn.execute(text(cmd), uid1 = order['uid']);
     oorder=[]
     for result in orders:
-        tmp = 'Restaurant: '+result[0]+' food '+result[1]+' order date: '+str(result[2])
+        tmp = 'Restaurant: '+result[0]+' food: '+result[1]+' order date: '+str(result[2])
         oorder.append(tmp)
     orders.close()
     context = dict(orders = oorder) 
